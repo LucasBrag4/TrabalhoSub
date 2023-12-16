@@ -16,15 +16,18 @@ public class BuscaPais extends AsyncTask<Void, Void, String> {
     MainActivity mainActivity = new MainActivity();
     ProgressDialog carregando = mainActivity.carregando;
 
-   private Context bpContext;
-    public BuscaPais(Context context){
+    private Context bpContext;
+
+    public BuscaPais(Context context) {
         bpContext = context;
 
-   }
+    }
+
     @Override
-    protected void onPreExecute(){
+    protected void onPreExecute() {
         carregando = ProgressDialog.show(bpContext, "Carregando Paises", "Por favor, Aguarde!");
     }
+
     @Override
     protected String doInBackground(Void... voids) {
 
@@ -35,16 +38,16 @@ public class BuscaPais extends AsyncTask<Void, Void, String> {
             URL urlPaises = new URL("https://falabr.cgu.gov.br/api/paises");
 
             HttpURLConnection conexao = (HttpURLConnection) urlPaises.openConnection();
-            conexao. setRequestMethod("GET");
-            conexao. setRequestProperty("Content-type", "application/json");
+            conexao.setRequestMethod("GET");
+            conexao.setRequestProperty("Content-type", "application/json");
             conexao.setDoOutput(true);
-            conexao. setConnectTimeout(3000);
+            conexao.setConnectTimeout(3000);
             conexao.connect();
 
-            Scanner scanner = new Scanner (urlPaises.openStream());
-            while (scanner.hasNext()){
-                    respostaPais.append(scanner.next());
-        }
+            Scanner scanner = new Scanner(urlPaises.openStream());
+            while (scanner.hasNext()) {
+                respostaPais.append(scanner.next());
+            }
 
         } catch (MalformedURLException e) {
             throw new RuntimeException(e);
@@ -57,7 +60,7 @@ public class BuscaPais extends AsyncTask<Void, Void, String> {
     }
 
     @Override
-    protected void onPostExecute(String dados){
+    protected void onPostExecute(String dados) {
         carregando.dismiss();
 
     }
